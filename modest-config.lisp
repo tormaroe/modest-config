@@ -66,7 +66,7 @@
   (let* ((sym-config (gensym "config"))
          (set-bindings (reduce #'append 
                          (mapcar #'list bindings
-                                        (mapcar (lambda (b) (list 'getf sym-config (list 'quote b)))
+                                        (mapcar (lambda (b) `(getf ,sym-config (quote ,b)))
                                                 bindings)))))
     `(let ,bindings
        (let ((,sym-config (load-config ,identifier)))
