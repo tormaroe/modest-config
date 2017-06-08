@@ -74,4 +74,5 @@
     `(let ,bindings
        (let ((,sym-config (load-config ,identifier)))
          (setf ,@set-bindings)
-         (progn ,@body)))))
+         (values (progn ,@body)
+                 ,sym-config)))))

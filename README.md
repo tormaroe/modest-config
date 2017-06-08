@@ -50,7 +50,7 @@ The system only contain the package `modest-config`, which also has the nickname
 
 **load-config** &optional identifier => plist
 
-**with-config** identifier bindings &body body => result
+**with-config** identifier bindings &body body => result config
 
 `identifier` may be a symbol, a string, a pathname, or nil.
 
