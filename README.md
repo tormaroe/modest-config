@@ -11,15 +11,21 @@ Given a config file:
   bar "This is a string"
 
   zot (list 1 2 3 4 5)
+
+  ;; Config may also contain functions
+  ;; ... if you are willing to trust your config maintainer
+  quux (lambda (wombat)
+         (format nil "Hello, ~a" wombat))
 )
 ```
 
 You may load and extract properties like this:
 
 ```
-(with-config "my.config" (zot bar)
+(with-config "example.config" (zot bar quux)
   (format t "The value of zot is ~s~%" zot)
-  (format t "~a says bar~%" bar))
+  (format t "~a says bar~%" bar)
+  (format t "(quux \"World\") => ~s~%" (funcall (eval quux) "World")))
 ```
 
 Output:
@@ -27,6 +33,7 @@ Output:
 ```
 The value of zot is (1 2 3 4 5)
 This is a string says bar
+(quux "World") => "Hello, World"
 ```
 
 ## Loading modest-config
