@@ -50,6 +50,10 @@
     (with-open-file (stream filespec :direction :input)
       (read stream t))))
 
+(defun zip-bindings (map-f bindings)
+  (reduce #'append 
+    (mapcar #'list bindings (mapcar map-f bindings))))
+
 (defmacro with-config (identifier bindings &body body)
   "Example where there exists a file foobar.config that contains a plist
    with properties HOST and PORT:
@@ -64,10 +68,9 @@
      (format t \"Host is ~a~%\" host)
      (format t \"Port is ~a~%\" port))"
   (let* ((sym-config (gensym "config"))
-         (set-bindings (reduce #'append 
-                         (mapcar #'list bindings
-                                        (mapcar (lambda (b) `(getf ,sym-config (quote ,b)))
-                                                bindings)))))
+         (set-bindings (zip-bindings (lambda (b)
+                                       `(getf ,sym-config (quote ,b)))
+                                     bindings)))
     `(let ,bindings
        (let ((,sym-config (load-config ,identifier)))
          (setf ,@set-bindings)
