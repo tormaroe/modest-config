@@ -37,7 +37,7 @@
   "Finds the config filename based on identifier and some conventions.
    Identifier may be nil, a symbol, or a filename (with or without path).
    If config file can't be found a condition is raised."
-  (etypecase identifier
+  (ctypecase identifier
     (null (find-by-conventions))
     (pathname (assert-config-exist identifier))
     (string (assert-config-exist (parse-namestring identifier)))
@@ -48,11 +48,13 @@
    assumed to be a property list, and returns it.
    If identifier already is a list, it's assumed to be the config and 
    modestly returned."
-  (if (listp identifier)
-    identifier
-    (let ((filespec (find-config identifier)))
-      (with-open-file (stream filespec :direction :input)
-        (read stream t)))))
+  (typecase identifier
+    (list identifier)
+    (stream (read identifier t))
+    (otherwise
+      (let ((filespec (find-config identifier)))
+        (with-open-file (stream filespec :direction :input)
+          (read stream t))))))
   
 (defun zip-bindings (map-f bindings)
   (reduce #'append 
