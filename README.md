@@ -58,16 +58,15 @@ Note that with-config returns the result of evaluating the last expression of `b
 
 ## Locating the config file
 
-*NEED TO UPDATE THIS SECTION, ADD A TABLE AND ALL NEW CASES*
+COnfiguration will be loaded based on the following rules:
 
-There are several options for how to locate the config file. If you specify a pathname or a string (which will be turned into a pathname) as the identifier, that file will be used.
-
-If you rather specify a symbol (or a keyword) as the identifier - lets say `:foobar` - modest will look for a file called `foobar.config`, first in the current directory and secondly in the current users home directory.
-
-If the identifier is nil these three locations will be tried is sequence:
-
-1. package.config in the current directory, where package is the name of the current package.
-1. modest.config in the current directory.
-1. package.config in the home directory of the current user.
+| Identifier type       | What will happen?                                                                                                                                                                                                                                                               |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| pathname              | File designated by pathname is assumed to contain configuration.                                                                                                                                                                                                                |
+| string                | Will be turned into a pathname and handled as such.                                                                                                                                                                                                                             |
+| symbol (also keyword) | If identifier is `'foobar` or `:foobar`; will look for a file called `foobar.config`, first in the current directory and secondly in the current users home directory.                                                                                                          |
+| list                  | Is assumed to be a property list containing the actual configuration. This will fail if passed to `find-config`.                                                                                                                                                                |
+| stream                | Config will be read from stream. This will fail if passed to `find-config`.                                                                                                                                                                                                     |
+| null                  | If the identifier is nil these three locations will be tried is sequence: 1) Package.config in the current directory, where package is the name of the current package. 2) modest.config in the current directory. 3) package.config in the home directory of the current user. |
 
 All functions may invoke an error condition if a configuration file can't be located.
