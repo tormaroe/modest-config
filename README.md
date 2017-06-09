@@ -50,9 +50,11 @@ The system only contain the package `modest-config`, which also has the nickname
 
 **load-config** &optional identifier => plist
 
-**with-config** identifier bindings &body body => result config
+**with-config** identifier bindings &body body => result, plist
 
 `identifier` may be a symbol, a string, a pathname, or nil.
+
+Note that with-config returns the result of evaluating the last expression of `body` as it's first value, and the entire configuration property list as it's second value.
 
 ## Locating the config file
 
