@@ -1,5 +1,7 @@
 ***MODEST-CONFIG*** is a simple configuration file parser for Common Lisp. Config files contain a single Common Lisp property list, and the parser provides a convenient way to extract the properties.
 
+## Quickstart
+
 Given a config file:
 
 ```
@@ -19,7 +21,7 @@ Given a config file:
 )
 ```
 
-You may load and extract properties like this:
+When you load and extract properties like this:
 
 ```
 (with-config "example.config" (zot bar quux)
@@ -28,7 +30,7 @@ You may load and extract properties like this:
   (format t "(quux \"World\") => ~s~%" (funcall (eval quux) "World")))
 ```
 
-Output:
+Then you get this output:
 
 ```
 The value of zot is (1 2 3 4 5)
