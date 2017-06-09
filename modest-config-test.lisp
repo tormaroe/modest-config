@@ -11,7 +11,7 @@
   (:use cl prove modest-config))
 (in-package modest-config-test)
 
-(plan 7)
+(plan 8)
 
 (ok t "Canary test")
 
@@ -68,16 +68,16 @@
 
 
 ;; NOT SURE WHY THIS FAILS... :(
-;
-;(is-expand (with-config "my.config" (x y)
-;             (format nil "~&x=~a and y=~a~%" x y))
-;
-;           (let (x y)
-;             (let (($config (load-config "my.config")))
-;               (setf x (getf $config 'x)
-;                     y (getf $config 'y))
-;               (values (progn
-;                         (format nil "~&x=~a and y=~a~%" x y))
-;                       config))))
+
+(is-expand (with-config "my.config" (x y)
+             (format nil "~&x=~a and y=~a~%" x y))
+
+           (let (x y)
+             (let (($config (load-config "my.config")))
+               (setf x (getf $config 'x)
+                     y (getf $config 'y))
+               (values (progn
+                         (format nil "~&x=~a and y=~a~%" x y))
+                       $config))))
 
 (finalize)
