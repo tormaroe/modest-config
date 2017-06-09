@@ -46,19 +46,31 @@ The system only contain the package `modest-config`, which also has the nickname
 
 ## API
 
-**find-config** &optional identifier => pathname
+**find-config** &optional *identifier* => *pathname*
 
-**load-config** &optional identifier => plist
+**load-config** &optional *identifier* => *plist*
 
-**with-config** identifier bindings &body body => result, plist
+**with-config** *identifier* *bindings* &body *body* => *result*, *plist*
 
-`identifier` may be a symbol, a string, a pathname, or nil.
+**Arguments and values:**
 
-Note that with-config returns the result of evaluating the last expression of `body` as it's first value, and the entire configuration property list as it's second value.
+*identifier* -- an object used to identify what config source to use. May be pathname, string, symbol, plist, stream, or nil (details further down).
+
+*pathname* -- the path to a config file.
+
+*plist* -- a property list containing the configuration.
+
+*bindings* -- a list of symbols that will be bound to values from configuration.
+
+*body* -- forms that will be evaluated in a progn.
+
+*result* -- the result of evaluating the last expression of *body*
+
+Note that `with-config` also returns the entire configuration property list as it's second value.
 
 ## Locating the config file
 
-COnfiguration will be loaded based on the following rules:
+Configuration will be loaded based on the following rules:
 
 | Identifier type       | What will happen?                                                                                                                                                                                                                                                               |
 |-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
