@@ -27,26 +27,25 @@
     (is result 3)
     (is conf '(x 1 y 2))))
 
-(defparameter string-config "
-  ;; Comments before config form ok
-  (some-int 1
-   some-string \"hello\"
-   some-fraction 2/3
-   ;; Comments allowed inside config as well
-   some-list (1 2 3 4 5))
-   some-value-not-used 324
-  ")
-
 (subtest "Testing load from stream"
-  (with-input-from-string (stream string-config)
-    (with-config stream (some-int
-                         some-string
-                         some-fraction
-                         some-list)
-      (is some-int 1)
-      (is some-string "hello")
-      (is some-fraction 2/3)
-      (is some-list (list 1 2 3 4 5)))))
+  (let ((string-config "
+           ;; Comments before config form ok
+           (some-int 1
+            some-string \"hello\"
+            some-fraction 2/3
+            ;; Comments allowed inside config as well
+            some-list (1 2 3 4 5))
+            some-value-not-used 324
+           ")))
+    (with-input-from-string (stream string-config)
+      (with-config stream (some-int
+                           some-string
+                           some-fraction
+                           some-list)
+        (is some-int 1)
+        (is some-string "hello")
+        (is some-fraction 2/3)
+        (is some-list (list 1 2 3 4 5)))))
 
 (subtest "Testing load from file using pathname"
   (with-config #p"example.config" (foo quux)
@@ -54,9 +53,10 @@
     (is (funcall (eval quux) "world")
         "Hello, world")))
 
-;; NOT SURE WHY THIS FAILS.., do we have a bug?
-;
 (subtest "Testing load from file using symbol"
+  (ok (find-config "example.config"))
+  (ok (find-config #p"example.config"))
+  (ok (find-config :|example|))
   (with-config :|example| (foo)
     (is foo :some-value)))
 

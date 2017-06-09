@@ -7,7 +7,7 @@
     (error "Config file ~a does not exist." pathname)))
 
 (defun assert-one-exist (pathnames)
-  (let ((match (find #'probe-file pathnames)))
+  (let ((match (find-if #'probe-file pathnames)))
     (if match
       match
       (error "Can't locate any config file candidate: ~s." pathnames))))
