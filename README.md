@@ -58,6 +58,8 @@ Note that with-config returns the result of evaluating the last expression of `b
 
 ## Locating the config file
 
+*NEED TO UPDATE THIS SECTION, ADD A TABLE AND ALL NEW CASES*
+
 There are several options for how to locate the config file. If you specify a pathname or a string (which will be turned into a pathname) as the identifier, that file will be used.
 
 If you rather specify a symbol (or a keyword) as the identifier - lets say `:foobar` - modest will look for a file called `foobar.config`, first in the current directory and secondly in the current users home directory.

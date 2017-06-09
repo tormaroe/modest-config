@@ -45,11 +45,15 @@
 
 (defun load-config (&optional identifier)
   "Simply reads the first element from config file,
-   assumed to be a property list, and returns it."
-  (let ((filespec (find-config identifier)))
-    (with-open-file (stream filespec :direction :input)
-      (read stream t))))
-
+   assumed to be a property list, and returns it.
+   If identifier already is a list, it's assumed to be the config and 
+   modestly returned."
+  (if (listp identifier)
+    identifier
+    (let ((filespec (find-config identifier)))
+      (with-open-file (stream filespec :direction :input)
+        (read stream t)))))
+  
 (defun zip-bindings (map-f bindings)
   (reduce #'append 
     (mapcar #'list bindings (mapcar map-f bindings))))
