@@ -1,7 +1,5 @@
 ***MODEST-CONFIG*** is a simple configuration file parser for Common Lisp. Config files contain a single Common Lisp property list, and the parser provides a convenient way to extract the properties.
 
-![Modest](https://media.giphy.com/media/l0HlvLn1tHxNNZQuA/giphy.gif)
-
 Given a config file:
 
 ```
