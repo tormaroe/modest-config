@@ -1,0 +1,18 @@
+#|-*- mode:lisp -*-|#
+(in-package :cl-user)
+
+(ql:quickload :prove)
+
+(defpackage :lake.user
+  (:use :cl :lake :cl-syntax)
+  (:shadowing-import-from :lake
+                          :directory))
+(in-package :lake.user)
+
+(use-syntax :interpol)
+
+(task "default" ())
+
+(task "test" ()
+  (prove:run :modest-config-test 
+             :reporter :fiveam))

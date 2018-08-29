@@ -66,9 +66,6 @@
   (is-error (find-config "some-file-does-not-exist.config")
             'simple-error))
 
-
-;; NOT SURE WHY THIS FAILS... :(
-
 (is-expand (with-config "my.config" (x y)
              (format nil "~&x=~a and y=~a~%" x y))
 
